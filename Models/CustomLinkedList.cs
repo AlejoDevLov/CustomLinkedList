@@ -63,12 +63,36 @@ internal class CustomLinkedList<T> : ILinkedList<T> where T : notnull
 
     public bool Contains(T item)
     {
-        throw new NotImplementedException();
+        if (Head is null)
+        {
+            return false;
+        }
+        else
+        {
+            IEnumerator<T> enumerator = GetEnumerator();
+            while ( enumerator.MoveNext() )
+            {
+                if (enumerator.Current.Equals(item))
+                    return true;
+            }
+
+            return false;
+        }
     }
 
-    public void CopyTo(T[] array, int arrayIndex)
+    public void CopyTo(T[] array, int indexToStartCopyingTo)
     {
-        throw new NotImplementedException();
+        if (array.Length - indexToStartCopyingTo < Count)
+        {
+            throw new IndexOutOfRangeException("The elements in the collection doesn't fit in the target array.");
+        }
+
+        var enumerator = GetEnumerator();
+        while( enumerator.MoveNext() )
+        {
+            array[indexToStartCopyingTo++] = enumerator.Current;
+        }
+        
     }
 
     public IEnumerator<T> GetEnumerator()
@@ -78,7 +102,31 @@ internal class CustomLinkedList<T> : ILinkedList<T> where T : notnull
 
     public bool Remove(T item)
     {
-        throw new NotImplementedException();
+        if(Head is null)
+        {
+            return false;
+        }
+        else if ( Head.Value.Equals(item) )
+        {
+            Head = Head.NextNode;
+            _totalNodes--;
+            return true;
+        }
+        else
+        {
+           var node = Head;
+           while( node.NextNode is not null )
+            {
+                if( node.NextNode.Value.Equals(item))
+                {
+                    node.NextNode = node.NextNode.NextNode;
+                    _totalNodes--;
+                    return true;
+                }
+                node = node.NextNode;
+            }
+            return false;
+        }
     }
 
     IEnumerator IEnumerable.GetEnumerator()

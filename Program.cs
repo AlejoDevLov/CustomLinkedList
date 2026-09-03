@@ -11,10 +11,18 @@ customLL.Add(5);
 customLL.Add(10);
 customLL.AddToFront(9);
 
+int[] emptyArray = new int[10];
+customLL.CopyTo(emptyArray, 3);
+customLL.Contains(2);
 
-IEnumerable<int> somethind = [];
+Console.WriteLine(customLL.Contains(2));
 
-foreach (var item in customLL)
+customLL.Remove(8);
+
+//foreach (var item in emptyArray)
+//    Console.WriteLine(item);
+
+foreach (var item  in customLL)
     Console.WriteLine(item);
 
 
